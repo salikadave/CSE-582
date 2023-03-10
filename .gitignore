@@ -1,1 +1,3 @@
 dataset/train.txt
+dataset/test.txt
+./.idea
