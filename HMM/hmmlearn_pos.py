@@ -95,7 +95,7 @@ for tag, tagid in tag2id.items():
         mytransmat[tagid][tagid2]= count_tags_to_next_tags[tagid][tagid2] / sum_tags_to_next_tags[tagid]
 
 
-model = hmm.MultinomialHMM(n_components=len(tags), algorithm='viterbi', random_state=42)
+model = hmm.MultinomialHMM(n_components=len(tags), algorithm='viterbi')
 model.startprob_ = mystartprob
 model.transmat_ = mytransmat
 model.emissionprob_ = myemissionprob
@@ -127,11 +127,22 @@ print(sum(lengths)==len(samples), sum(lengths)==len(data_test))
 from sklearn.utils import check_array
 X = check_array(samples)
 from hmmlearn import _utils
-for sub_X in _utils.split_X_lengths(X, lengths):
-    print(sub_X.shape)
 
 
 pos_predict = model.predict(samples, lengths)
 pos_predict
+
+
+
+tags_test = list(data_test.POS)
+pos_test = np.zeros((len(tags_test), ), dtype=int)
+for i, val in enumerate(tags_test):
+    pos_test[i] = tag2id[val]
+len(pos_predict), len(pos_test), len(samples), len(word_test)
+
+
+def reportTest(y_pred, y_test):
+    print("The accuracy is {}".format(accuracy_score(y_test, y_pred))) 
+reportTest(pos_predict, pos_test)
 
 
