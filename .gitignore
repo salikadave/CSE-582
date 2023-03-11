@@ -1,5 +1,0 @@
-dataset/train.txt
-dataset/test.txt
-dataset/test_labelled.txt
-./.idea/
-*/embeddings/
