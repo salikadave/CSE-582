@@ -1,3 +1,5 @@
 dataset/train.txt
 dataset/test.txt
-./.idea
+dataset/test_labelled.txt
+./.idea/
+*/embeddings/
