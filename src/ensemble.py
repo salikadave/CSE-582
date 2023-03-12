@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 from .parser import format_data
 
 class HardEnsemble():
@@ -5,10 +8,11 @@ class HardEnsemble():
         This class implements ensembling similar to voting classifier where 
         the output is the median output from the base models
     """
-    def __init__(self, test_files, output_file_name, labelled_test_file):
+    def __init__(self, test_files, output_file_name, labelled_test_file, preference=-1):
         self.test_files = test_files
         self.output_file_name = output_file_name
         self.labelled_test_file = labelled_test_file
+        self.preference = preference 
         self.test_files_to_data_mapper = {}
         self.ensemble_outputs = []
         self.parse_input_files()
@@ -63,8 +67,15 @@ class HardEnsemble():
         """
         We return the mode as the output of the ensemble 
         """
-        return max(set(y), key=y.count)
-    
+        data = Counter(y)
+        if len(data) == 1:
+            return data.most_common(1)[0][0]
+        # two elements are equal 
+        elif data.most_common(2)[0][0] == data.most_common(2)[1][0]:
+            return y[self.preference]
+        # only one mode element
+        else:
+            return data.most_common(1)[0][0]
 
     def generate_labelled_data(self):
         f = open(self.output_file_name, "w")
