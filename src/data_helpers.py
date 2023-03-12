@@ -56,11 +56,11 @@ def embed_test_sentences(sentence):
     X_embs = np.asarray(X_embs)
     return X_embs
 
-def preprocess_unlabelled_test_data(embeddings, oov, test_sentences):
+def preprocess_unlabelled_test_data(embeddings, oov, test_sentences, window=1):
 
     preprocessed_test_data = []
     for sentence in test_sentences:
-        sentence = transform_test_sentence(embeddings, oov, sentence, 1)
+        sentence = transform_test_sentence(embeddings, oov, sentence, window=window)
         embedded = embed_test_sentences(sentence)
         preprocessed_test_data.append(embedded)
 
