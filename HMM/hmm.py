@@ -134,17 +134,19 @@ def read_probs():
 
 
 def main():
+    
+    data = format_data(pos_train)
+    
     global train_set
-    train_set = format_data(pos_train)
     global test_set
-    test_set = format_data(pos_test)
+    train_set, test_set = train_test_split(data, train_size=.8, test_size=.20, random_state=42)
 
     global train_tagged_words
     train_tagged_words = [ tup for sent in train_set for tup in sent ]
 
     test_tagged_words = [tup for sent in test_set for tup in sent]
 
-    test_untagged_words =  [tup[0] for sent in test_set for tup in sent]
+    test_untagged_words =  [word for sent in test_set for word in sent]
 
 
     global tags
